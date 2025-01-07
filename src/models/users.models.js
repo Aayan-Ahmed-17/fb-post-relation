@@ -17,10 +17,6 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   },
-  firstName: {
-    type: String,
-    required: [true, "firstName is required"],
-  },
   posts: [
     {
       type: Schema.Types.ObjectId,
