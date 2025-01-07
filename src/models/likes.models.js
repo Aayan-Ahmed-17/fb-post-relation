@@ -12,7 +12,7 @@ const likeSchema = new Schema(
         },
     },
     {
-
+        timestamps: true
     }
 )
 
