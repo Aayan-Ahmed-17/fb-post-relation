@@ -12,7 +12,7 @@ const postSchema = new Schema(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: User,
+      ref: "User",
     },
   },
   {
@@ -20,4 +20,4 @@ const postSchema = new Schema(
   }
 );
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("post", postSchema);
