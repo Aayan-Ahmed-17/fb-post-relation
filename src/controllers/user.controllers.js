@@ -20,27 +20,34 @@ const generateRefreshToken = (user) => {
 const registerUser = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
 
-    //* Checking Validations
+  //* Checking Validations
   if (!email) return res.status(401).json({ message: "email is required" });
 
-  if (!password) return res.status(401).json({ message: "password is required" });
-  
-  if (!firstName || !lastName) return res.status(401).json({ message: "First & Last Name is required" });
+  if (!password)
+    return res.status(401).json({ message: "password is required" });
+
+  if (!firstName || !lastName)
+    return res.status(401).json({ message: "First & Last Name is required" });
 
   try {
     //* isEmail already exist
     const user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "user already exist" });
-    
+
     //* create user if not exist
-    const createUser = await User.create({ email, password, firstName, lastName });
+    const createUser = await User.create({
+      email,
+      password,
+      firstName,
+      lastName,
+    });
     res.json({
       message: "user registered successfully",
       user: createUser,
     });
   } catch (error) {
     res.status(500).json({
-      message: "internal server error",
+      message: "internal server error" + error,
     });
   }
 };
@@ -62,7 +69,7 @@ const loginUser = async (req, res) => {
     return res.status(400).json({ message: "incorrect password" });
 
   //* when user Logouts tokens get expired | when token expires user gets logout
-  try{
+  try {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
@@ -78,13 +85,11 @@ const loginUser = async (req, res) => {
       accessToken,
       refreshToken,
       user,
-    })
-  }catch(err){
-    res.json(
-      {
-        message: "Error: " + err
-      }
-    )
+    });
+  } catch (err) {
+    res.json({
+      message: "Error: " + err,
+    });
   }
 };
 
