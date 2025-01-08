@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express"
 import cors from "cors"
 import connectDB from "./src/db/index.js";
+import commentRoutes from "./src/routes/comment.routes.js";
 
 
 
@@ -16,20 +17,22 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+// app.use('/api/v1' , userRoutes)
+// app.use('/api/v1' , postRoutes)
+// app.use('/api/v1' , likeRoutes)
+app.use('/api/v1' , commentRoutes)
 
-// app.use('/api/v1', courseRoutes)
-// app.use('/api/v1', studentRoutes)
 
-// connectDB()
-//     .then(() => {
-//         app.listen(process.env.PORT, () => {
-//             console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
-//         });
-//     })
-//     .catch((err) => {
-//         console.log("MONGO DB connection failed !!! ", err);
-//     });
+connectDB()
+    .then(() => {
+        app.listen(process.env.PORT, () => {
+            console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log("MONGO DB connection failed !!! ", err);
+    });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+// app.listen(port, () => {
+//     console.log(`Example app listening on port ${port}`)
+// })
