@@ -4,11 +4,13 @@ const likeSchema = new Schema(
     {
         user:{
             type: Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: [true, "user id is required"]
         },
         post:{
             type: Schema.Types.ObjectId,
-            ref: "Post"
+            ref: "Post",
+            required: [true, "post id is required"]
         },
     },
     {

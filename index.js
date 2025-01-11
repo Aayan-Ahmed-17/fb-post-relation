@@ -6,6 +6,7 @@ import connectDB from "./src/db/index.js";
 import commentRoutes from "./src/routes/comment.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import likeRoutes from "./src/routes/like.routes.js";
+import postRoutes from "./src/routes/post.routes.js";
 
 
 
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1' , userRoutes)
-// app.use('/api/v1' , postRoutes)
+app.use('/api/v1' , postRoutes)
 app.use('/api/v1' , likeRoutes)
 app.use('/api/v1' , commentRoutes)
 

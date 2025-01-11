@@ -1,23 +1,29 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from 'mongoose';
 
-const postSchema = new Schema(
-  {
+const postSchema = new mongoose.Schema({
     title: {
-      type: String,
-      required: [true, "title is required"],
+        type: String,
+        required: true,
     },
     description: {
-      type: String,
-      required: [true, "description is required"],
+        type: String,
+        required: true,
     },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
-  },
-  {
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment',
+    }],
+}, {
     timestamps: true,
-  }
-);
+});
 
-export default mongoose.model("post", postSchema);
+export default mongoose.model('Post', postSchema);
