@@ -11,18 +11,13 @@ import postRoutes from "./src/routes/post.routes.js";
 const app = express();
 const port = 3000;
 
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'your-production-domain.com'
-    : 'http://localhost:5173',
-  credentials: true,
+app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173', // or whatever your frontend URL is
+  credentials: true, // This is important for handling credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-};
-
-app.use(express.json());
-
-app.use(cors(corsOptions));
+}));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
