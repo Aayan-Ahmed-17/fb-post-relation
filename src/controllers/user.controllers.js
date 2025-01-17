@@ -38,29 +38,57 @@ const registerUser = async (req, res) => {
     }
 }
 
+// const loginUser = async (req, res) => {
+//     const { email, password } = req.body
+
+//     if (!email) return res.status(400).json({ message: "email required" });
+//     if (!password) return res.status(400).json({ message: "password required" });
+
+//     const user = await User.findOne({ email })
+//     if (!user) return res.status(400).json({ message: "user is not registered" })
+
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) return res.status(400).json({ message: "incorrect password" });
+
+//     const accessToken = generateAccessToken(user)
+//     const refreshToken = generateRefreshToken(user)
+
+//     res.cookie("refreshToken", refreshToken, {  httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "None" });
+
+//     res.json({
+//         message: "user logged In successfully",
+//         accessToken,
+//         refreshToken,
+//         user
+//     })
+// }
+
 const loginUser = async (req, res) => {
-    const { email, password } = req.body
+  const { email, password } = req.body
 
-    if (!email) return res.status(400).json({ message: "email required" });
-    if (!password) return res.status(400).json({ message: "password required" });
+  if (!email) return res.status(400).json({ message: "email required" });
+  if (!password) return res.status(400).json({ message: "password required" });
 
-    const user = await User.findOne({ email })
-    if (!user) return res.status(400).json({ message: "user is not registered" })
+  const user = await User.findOne({ email })
+  if (!user) return res.status(400).json({ message: "user is not registered" })
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(400).json({ message: "incorrect password" });
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) return res.status(400).json({ message: "incorrect password" });
 
-    const accessToken = generateAccessToken(user)
-    const refreshToken = generateRefreshToken(user)
+  const accessToken = generateAccessToken(user)
 
-    res.cookie("refreshToken", refreshToken, {  httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "None" });
+  // Access token ko cookie mein set karein
+  res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  });
 
-    res.json({
-        message: "user logged In successfully",
-        accessToken,
-        refreshToken,
-        user
-    })
+  res.json({
+      message: "user logged In successfully",
+      user
+  })
 }
 
 const logoutUser = async (req, res) => {
