@@ -7,8 +7,10 @@ import commentRoutes from "./src/routes/comment.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import likeRoutes from "./src/routes/like.routes.js";
 import postRoutes from "./src/routes/post.routes.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser())
 const port = 3000;
 
 app.use(express.json());
