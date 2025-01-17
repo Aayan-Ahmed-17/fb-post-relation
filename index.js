@@ -10,10 +10,10 @@ import postRoutes from "./src/routes/post.routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(cookieParser())
 const port = 3000;
 
 app.use(express.json());
+app.use(cookieParser())
 app.use(cors({
   origin: 'http://localhost:5173', // or whatever your frontend URL is
   credentials: true, // This is important for handling credentials
