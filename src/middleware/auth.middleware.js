@@ -1,52 +1,16 @@
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
-// const authenticateUser = async (req, res, next) => {
-//     const token = req.headers["authorization"];
-//     if (!token) return res.status(404).json({ message: "no token found" });
+const authenticateUser = async (req, res, next) => {
+    const token = req.headers["authorization"];
+    if (!token) return res.status(404).json({ message: "no token found" });
 
-//     jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, user) => {
-//         if (err) return res.status(403).json({ message: "invalid token" });
-//         console.log("authenticate user ===> ", user)
-//         req.userId = user.id;
-//         next();
-//     });
-// };
-
-
-// export default authenticateUser
-
-// // import jwt from "jsonwebtoken"
+    jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "invalid token" });
+        console.log("authenticate user ===> ", user)
+        req.userId = user.id;
+        next();
+    });
+};
 
 
-
-// const authenticateUser = async (req, res, next) => {
-
-//         const token = req.headers["authorization"];
-    
-//         if (!token) return res.status(404).json({ message: "no token found" });
-    
-    
-    
-//         jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, user) => {
-    
-//             if (err) return res.status(403).json({ message: "invalid token" });
-    
-//             console.log("authenticate user ===> ", user)
-    
-//             req.userId = user.id;
-    
-//             next();
-    
-//         });
-    
-//     };
-    
-    
-    
-    
-    
-//     export default authenticateUser
-    
-    
-    
-//     // this is my code which is checking is authorization key available in the header or not and only this creating issues. this key expecting accessToken key as its value and the accessToken will be
+export default authenticateUser
