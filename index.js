@@ -15,10 +15,7 @@ const port = 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: "http://localhost:5173", // or whatever your frontend URL is
-    credentials: true, // This is important for handling credentials
-  })
+  cors()
 );
 
 app.get("/", (req, res) => {
